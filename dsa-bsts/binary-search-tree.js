@@ -21,14 +21,14 @@ class BinarySearchTree {
     }
     let current = this.root;
 
-    while (true) {  // helper(current)
+    while (true) { 
       if (current.val > val) {
         if (!current.left) {
           current.left = new Node(val);
-          break
+          break;
         }
-        current = current.left;  //helper(current.left)
-      }  //else if
+        current = current.left;
+      } 
       if (current.val < val) {
         if (!current.right) {
           current.right = new Node(val);
@@ -37,7 +37,7 @@ class BinarySearchTree {
         current = current.right;
       }
     }
-    //helper(this.root);
+    
     return this;
   }
 
