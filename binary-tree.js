@@ -17,21 +17,71 @@ class BinaryTree {
    * the length of the shortest path from the root to a leaf. */
 
   minDepth() {
+    if (!this.root) return 0;
 
+    let toVisitQueue = [{node: this.root, count: 1}];
+    // let count = 1;
+
+    while (toVisitQueue.length) {
+      let current = toVisitQueue.shift();
+
+      if (!current.node.left && !current.node.right) return current.count;
+
+      if(current.node.left) {
+        toVisitQueue.push({node: current.node.left, count: current.count + 1});
+      }
+      if(current.node.right) {
+        toVisitQueue.push({node: current.node.right, count: current.count + 1});
+      }
+    }
   }
 
   /** maxDepth(): return the maximum depth of the tree -- that is,
    * the length of the longest path from the root to a leaf. */
 
   maxDepth() {
+    if (!this.root) return 0;
 
+    let toVisitQueue = [{node: this.root, treeLevel: 1}];
+    let previous = null;
+
+    while (toVisitQueue.length) {
+      let current = toVisitQueue.shift();
+
+      if(current.node.left) {
+        toVisitQueue.push({node: current.node.left, treeLevel: current.treeLevel + 1});
+      }
+      if(current.node.right) {
+        toVisitQueue.push({node: current.node.right, treeLevel: current.treeLevel + 1});
+      }
+      previous = current;
+    }
+
+    return previous.treeLevel;
   }
 
   /** maxSum(): return the maximum sum you can obtain by traveling along a path in the tree.
    * The path doesn't need to start at the root, but you can't visit a node more than once. */
 
   maxSum() {
+    if (!this.root) return 0;
 
+    let toVisitQueue = [{node: this.root, sum: this.root.val}];
+    let currentMaxSum = this.root.val;
+
+    while (toVisitQueue.length) {
+      let current = toVisitQueue.shift();
+
+      if(current.node.left) {
+        toVisitQueue.push({node: current.node.left, sum: current.sum + current.node.left.val});
+      }
+      if(current.node.right) {
+        toVisitQueue.push({node: current.node.right, sum: current.sum + current.node.right.val});
+      }
+      if(current.sum > currentMaxSum) currentMaxSum = current.sum;
+    }
+
+    return currentMaxSum;
   }
 
   /** nextLarger(lowerBound): return the smallest value in the tree
